@@ -1,0 +1,2736 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UTTT EROS - Blog Tecnológico de Élite</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-dark: #0a0e27;
+            --primary-darker: #050812;
+            --neon-blue: #00d4ff;
+            --neon-blue-light: #00f0ff;
+            --neon-purple: #a855f7;
+            --neon-purple-light: #d97ef7;
+            --neon-green: #00ff88;
+            --neon-pink: #ff006e;
+            --text-light: #ffffff;
+            --text-secondary: #b0b0b0;
+            --text-tertiary: #808080;
+            --border-color: #1a1f3a;
+            --glass-bg: rgba(26, 31, 58, 0.5);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-darker) 50%, #1a0033 100%);
+            background-attachment: fixed;
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, rgba(0, 212, 255, 0.15), rgba(0, 212, 255, 0) 2px),
+                radial-gradient(2px 2px at 60px 70px, rgba(168, 85, 247, 0.15), rgba(168, 85, 247, 0) 2px),
+                radial-gradient(1px 1px at 50px 50px, rgba(0, 255, 136, 0.1), rgba(0, 255, 136, 0) 1px),
+                radial-gradient(1px 1px at 130px 80px, rgba(255, 0, 110, 0.1), rgba(255, 0, 110, 0) 1px),
+                radial-gradient(2px 2px at 90px 10px, rgba(0, 212, 255, 0.1), rgba(0, 212, 255, 0) 2px);
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            pointer-events: none;
+            z-index: 1;
+            animation: drift 20s linear infinite;
+        }
+
+        @keyframes drift {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(200px, 200px); }
+        }
+
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--primary-dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--neon-blue), var(--neon-purple));
+            border-radius: 10px;
+            border: 3px solid var(--primary-dark);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, var(--neon-blue-light), var(--neon-purple-light));
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            background: linear-gradient(135deg, rgba(10, 14, 39, 0.85) 0%, rgba(26, 31, 58, 0.85) 100%);
+            backdrop-filter: blur(20px);
+            border-bottom: 2px solid rgba(0, 212, 255, 0.25);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 8px 32px rgba(0, 212, 255, 0.15);
+            animation: headerSlideDown 0.6s ease;
+        }
+
+        @keyframes headerSlideDown {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.3rem;
+            font-weight: 800;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+        }
+
+        .logo img {
+            width: 45px;
+            height: 45px;
+            filter: drop-shadow(0 0 12px rgba(0, 212, 255, 0.6));
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover img {
+            transform: scale(1.1) rotate(5deg);
+            filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.9));
+        }
+
+        .logo-text {
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        nav {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+        }
+
+        nav a::before {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+
+        nav a:hover {
+            color: var(--neon-blue);
+            transform: translateY(-2px);
+        }
+
+        nav a:hover::before {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--neon-blue);
+            font-size: 1.8rem;
+            cursor: pointer;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        .menu-toggle:hover {
+            transform: rotate(90deg);
+            filter: drop-shadow(0 0 10px var(--neon-blue));
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            position: relative;
+            min-height: 800px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            padding: 6rem 2rem;
+            z-index: 2;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .hero-circle-1 {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.25) 0%, transparent 70%);
+            border-radius: 50%;
+            top: -200px;
+            right: -200px;
+            animation: float1 8s ease-in-out infinite;
+            filter: blur(40px);
+        }
+
+        .hero-circle-2 {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            bottom: -150px;
+            left: -150px;
+            animation: float2 10s ease-in-out infinite;
+            filter: blur(40px);
+        }
+
+        @keyframes float1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(30px, 30px) scale(1.1); }
+        }
+
+        @keyframes float2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-30px, -30px) scale(1.05); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1000px;
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 10px 25px;
+            background: rgba(0, 212, 255, 0.1);
+            border: 2px solid var(--neon-blue);
+            border-radius: 50px;
+            color: var(--neon-blue);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: inset 0 0 20px rgba(0, 212, 255, 0.1);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: inset 0 0 20px rgba(0, 212, 255, 0.1); }
+            50% { box-shadow: inset 0 0 30px rgba(0, 212, 255, 0.3); }
+        }
+
+        .hero h1 {
+            font-size: 5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--neon-blue) 0%, var(--neon-purple) 50%, var(--neon-pink) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+            letter-spacing: -2px;
+            animation: titleGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { text-shadow: 0 0 30px rgba(0, 212, 255, 0.3), 0 0 60px rgba(168, 85, 247, 0.2); }
+            50% { text-shadow: 0 0 50px rgba(0, 212, 255, 0.5), 0 0 80px rgba(168, 85, 247, 0.4); }
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+            letter-spacing: 0.5px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 45px;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            color: var(--primary-dark);
+            text-decoration: none;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.5), 0 10px 40px rgba(168, 85, 247, 0.3);
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: left 0.4s ease;
+            z-index: -1;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 0 50px rgba(0, 212, 255, 0.8), 0 20px 60px rgba(168, 85, 247, 0.5);
+        }
+
+        .cta-button-secondary {
+            background: rgba(0, 212, 255, 0.1);
+            color: var(--neon-blue);
+            border: 2px solid var(--neon-blue);
+            box-shadow: inset 0 0 20px rgba(0, 212, 255, 0.1), 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+
+        .cta-button-secondary:hover {
+            background: rgba(0, 212, 255, 0.2);
+            box-shadow: inset 0 0 30px rgba(0, 212, 255, 0.2), 0 0 40px rgba(0, 212, 255, 0.6);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(15px); }
+        }
+
+        .scroll-indicator i {
+            font-size: 1.5rem;
+            color: var(--neon-blue);
+            filter: drop-shadow(0 0 10px var(--neon-blue));
+        }
+
+        /* ===== CATEGORÍAS ===== */
+        .categories {
+            max-width: 1400px;
+            margin: -100px auto 6rem;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .category-card {
+            background: linear-gradient(135deg, rgba(26, 31, 58, 0.4), rgba(42, 51, 89, 0.3));
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(0, 212, 255, 0.15);
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 1s ease both;
+        }
+
+        .category-card:nth-child(1) { animation-delay: 0.1s; }
+        .category-card:nth-child(2) { animation-delay: 0.2s; }
+        .category-card:nth-child(3) { animation-delay: 0.3s; }
+        .category-card:nth-child(4) { animation-delay: 0.4s; }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .category-card:hover::before {
+            opacity: 1;
+        }
+
+        .category-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 40px rgba(0, 212, 255, 0.4), inset 0 0 30px rgba(0, 212, 255, 0.1);
+            background: linear-gradient(135deg, rgba(26, 31, 58, 0.6), rgba(42, 51, 89, 0.5));
+        }
+
+        .category-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: var(--neon-blue);
+            text-shadow: 0 0 20px var(--neon-blue);
+            transition: all 0.4s ease;
+            display: block;
+            animation: iconFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes iconFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .category-card:nth-child(2) .category-icon {
+            color: var(--neon-purple);
+            text-shadow: 0 0 20px var(--neon-purple);
+        }
+
+        .category-card:nth-child(3) .category-icon {
+            color: var(--neon-green);
+            text-shadow: 0 0 20px var(--neon-green);
+        }
+
+        .category-card:nth-child(4) .category-icon {
+            color: var(--neon-pink);
+            text-shadow: 0 0 20px var(--neon-pink);
+        }
+
+        .category-card:hover .category-icon {
+            transform: scale(1.2) rotate(5deg);
+        }
+
+        .category-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+
+        .category-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== BANNER ===== */
+        .banner-section {
+            max-width: 1400px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .banner-image {
+            width: 100%;
+            max-height: 500px;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            box-shadow: 0 0 40px rgba(0, 212, 255, 0.3), inset 0 0 30px rgba(0, 212, 255, 0.1);
+            animation: fadeInUp 1s ease;
+            transition: all 0.4s ease;
+        }
+
+        .banner-image:hover {
+            box-shadow: 0 0 60px rgba(0, 212, 255, 0.5), inset 0 0 40px rgba(0, 212, 255, 0.2);
+            transform: scale(1.02);
+        }
+
+        .banner-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* ===== ARTÍCULOS RECIENTES ===== */
+        .articles-section {
+            max-width: 1400px;
+            margin: 6rem auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            background: linear-gradient(135deg, var(--neon-blue) 0%, var(--neon-purple) 50%, var(--neon-pink) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+            letter-spacing: -1px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .section-description {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .article-card {
+            background: linear-gradient(135deg, rgba(26, 31, 58, 0.3), rgba(42, 51, 89, 0.2));
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(0, 212, 255, 0.1);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            animation: fadeInUp 1s ease both;
+        }
+
+        .article-card:nth-child(1) { animation-delay: 0.1s; }
+        .article-card:nth-child(2) { animation-delay: 0.15s; }
+        .article-card:nth-child(3) { animation-delay: 0.2s; }
+        .article-card:nth-child(4) { animation-delay: 0.25s; }
+        .article-card:nth-child(5) { animation-delay: 0.3s; }
+        .article-card:nth-child(6) { animation-delay: 0.35s; }
+
+        .article-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple), var(--neon-pink));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+            z-index: 10;
+        }
+
+        .article-card:hover::after {
+            transform: scaleX(1);
+        }
+
+        .article-card:hover {
+            transform: translateY(-15px);
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 50px rgba(0, 212, 255, 0.3), inset 0 0 30px rgba(0, 212, 255, 0.05);
+            background: linear-gradient(135deg, rgba(26, 31, 58, 0.6), rgba(42, 51, 89, 0.4));
+        }
+
+        .article-image {
+            width: 100%;
+            height: 220px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(168, 85, 247, 0.2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 2px solid rgba(0, 212, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .article-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.4s ease;
+        }
+
+        .article-card:hover .article-image img {
+            transform: scale(1.1);
+        }
+
+        .article-image::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent 20%, rgba(255, 255, 255, 0.1) 50%, transparent 80%);
+            animation: shine 3s infinite;
+            z-index: 1;
+        }
+
+        @keyframes shine {
+            0% { transform: translate(-100%, -100%) rotate(45deg); }
+            100% { transform: translate(100%, 100%) rotate(45deg); }
+        }
+
+        .article-content {
+            padding: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .article-category {
+            display: inline-block;
+            padding: 5px 15px;
+            background: rgba(0, 212, 255, 0.15);
+            color: var(--neon-blue);
+            font-size: 0.75rem;
+            border-radius: 20px;
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .article-date {
+            color: var(--text-tertiary);
+            font-size: 0.9rem;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .article-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+
+        .article-card:hover h3 {
+            color: var(--neon-blue);
+        }
+
+        .article-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .read-more {
+            color: var(--neon-blue);
+            text-decoration: none;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+
+        .read-more:hover {
+            gap: 1rem;
+            color: var(--neon-purple);
+            transform: translateX(5px);
+        }
+
+        /* ===== NEWSLETTER ===== */
+        .newsletter {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.08), rgba(168, 85, 247, 0.08));
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(0, 212, 255, 0.2);
+            padding: 5rem 2rem;
+            margin: 6rem auto;
+            max-width: 1400px;
+            text-align: center;
+            border-radius: 25px;
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
+        }
+
+        .newsletter::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 50%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 50%, rgba(168, 85, 247, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .newsletter-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .newsletter h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .newsletter p {
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            font-size: 1.1rem;
+        }
+
+        .newsletter-form {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            min-width: 250px;
+            padding: 16px 25px;
+            background: rgba(26, 31, 58, 0.5);
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 15px;
+            color: var(--text-light);
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .newsletter-form input:focus {
+            outline: none;
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 25px rgba(0, 212, 255, 0.4), inset 0 0 15px rgba(0, 212, 255, 0.1);
+            background: rgba(26, 31, 58, 0.7);
+        }
+
+        .newsletter-form input::placeholder {
+            color: var(--text-tertiary);
+        }
+
+        .newsletter-form button {
+            padding: 16px 40px;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            color: var(--primary-dark);
+            border: none;
+            border-radius: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Poppins', sans-serif;
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+        }
+
+        .newsletter-form button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 0 50px rgba(0, 212, 255, 0.8), 0 10px 40px rgba(168, 85, 247, 0.4);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: linear-gradient(135deg, rgba(5, 8, 18, 0.95) 0%, rgba(10, 14, 39, 0.95) 100%);
+            border-top: 2px solid rgba(0, 212, 255, 0.2);
+            padding: 4rem 2rem 2rem;
+            margin-top: 6rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h3 {
+            color: var(--neon-blue);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 1rem;
+        }
+
+        .footer-section a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .footer-section a:hover {
+            color: var(--neon-blue);
+            transform: translateX(5px);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background: rgba(0, 212, 255, 0.1);
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 50%;
+            color: var(--neon-blue);
+            transition: all 0.4s ease;
+            font-size: 1.2rem;
+        }
+
+        .social-links a:hover {
+            background: rgba(0, 212, 255, 0.3);
+            border-color: var(--neon-blue);
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 2px solid rgba(0, 212, 255, 0.15);
+            color: var(--text-tertiary);
+            font-size: 0.95rem;
+        }
+
+        /* ===== ARTÍCULO DESTACADO ===== */
+        .article-card.featured {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: 1fr 1.4fr;
+            border-color: rgba(0, 212, 255, 0.35);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.15);
+        }
+
+        .article-card.featured .article-image {
+            height: 100%;
+            min-height: 280px;
+        }
+
+        .article-card.featured .article-image img {
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .article-card.featured .article-content {
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 0.8rem;
+        }
+
+        .article-card.featured h3 {
+            font-size: 1.6rem;
+        }
+
+        .article-card.featured p {
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        .featured-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 14px;
+            background: rgba(0, 212, 255, 0.12);
+            border: 1px solid rgba(0, 212, 255, 0.4);
+            border-radius: 50px;
+            color: var(--neon-blue);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            width: fit-content;
+            margin-bottom: 0.3rem;
+        }
+
+        /* ===== MODAL ARTÍCULO ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(5, 8, 18, 0.92);
+            backdrop-filter: blur(12px);
+            z-index: 2000;
+            overflow-y: auto;
+            padding: 2rem 1rem;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+        .modal-box {
+            background: linear-gradient(135deg, rgba(10, 14, 39, 0.98), rgba(26, 31, 58, 0.98));
+            border: 2px solid rgba(0, 212, 255, 0.25);
+            border-radius: 24px;
+            max-width: 860px;
+            width: 100%;
+            padding: 3rem;
+            position: relative;
+            box-shadow: 0 0 60px rgba(0, 212, 255, 0.2);
+            animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.2rem;
+            right: 1.5rem;
+            background: rgba(0, 212, 255, 0.1);
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            color: var(--neon-blue);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: rgba(0, 212, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .modal-header {
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(0, 212, 255, 0.15);
+            padding-bottom: 1.5rem;
+        }
+
+        .modal-header .article-category {
+            margin-bottom: 0.8rem;
+        }
+
+        .modal-header h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.3;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-header .article-date {
+            color: var(--text-tertiary);
+            font-size: 0.9rem;
+        }
+
+        .modal-body h3 {
+            font-size: 1.2rem;
+            color: var(--neon-blue);
+            margin: 1.8rem 0 0.7rem;
+            font-weight: 700;
+        }
+
+        .modal-body p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 0.8rem;
+            font-size: 0.97rem;
+        }
+
+        .modal-body ul {
+            margin: 0.5rem 0 1rem 1.5rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+            font-size: 0.97rem;
+        }
+
+        .modal-body li {
+            margin-bottom: 0.4rem;
+        }
+
+        .modal-body li strong {
+            color: var(--text-light);
+        }
+
+        .metric-box {
+            background: rgba(0, 212, 255, 0.06);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 14px;
+            padding: 1.2rem 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .metric-box h4 {
+            color: var(--neon-blue);
+            font-size: 0.95rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.7rem;
+        }
+
+        .metric-formula {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: var(--neon-green);
+            background: rgba(0, 255, 136, 0.06);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            margin: 0.5rem 0;
+            display: block;
+        }
+
+        .checklist {
+            list-style: none;
+            margin: 0.5rem 0 1rem 0;
+        }
+
+        .checklist li::before {
+            content: '✓ ';
+            color: var(--neon-green);
+            font-weight: 700;
+        }
+
+        .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(0, 212, 255, 0.1);
+        }
+
+        .tag {
+            padding: 4px 12px;
+            background: rgba(168, 85, 247, 0.1);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 50px;
+            font-size: 0.78rem;
+            color: var(--neon-purple-light);
+        }
+
+        /* ===== SECCIÓN OPINIONES ===== */
+        .reviews-section {
+            max-width: 1400px;
+            margin: 6rem auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .reviews-layout {
+            display: grid;
+            grid-template-columns: 1fr 1.6fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        /* Panel izquierdo: resumen */
+        .reviews-summary {
+            background: linear-gradient(135deg, rgba(26,31,58,0.5), rgba(42,51,89,0.3));
+            border: 2px solid rgba(0,212,255,0.18);
+            border-radius: 24px;
+            padding: 2.5rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 100px;
+        }
+
+        .avg-score {
+            font-size: 5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            margin-bottom: 0.3rem;
+        }
+
+        .avg-label {
+            color: var(--text-tertiary);
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .avg-stars {
+            font-size: 1.8rem;
+            letter-spacing: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .total-reviews-count {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        .bar-breakdown {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            text-align: left;
+        }
+
+        .bar-row {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+        }
+
+        .bar-label {
+            min-width: 38px;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .bar-track {
+            flex: 1;
+            height: 8px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            border-radius: 10px;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+            transition: width 0.8s cubic-bezier(0.4,0,0.2,1);
+        }
+
+        .bar-count {
+            min-width: 20px;
+            text-align: right;
+        }
+
+        /* Formulario de reseña */
+        .review-form-box {
+            background: linear-gradient(135deg, rgba(26,31,58,0.4), rgba(42,51,89,0.25));
+            border: 2px solid rgba(0,212,255,0.15);
+            border-radius: 24px;
+            padding: 2.2rem;
+            backdrop-filter: blur(10px);
+            margin-bottom: 2rem;
+        }
+
+        .review-form-box h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            color: var(--neon-blue);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .star-selector {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .star-selector i {
+            font-size: 2rem;
+            cursor: pointer;
+            color: rgba(255,255,255,0.15);
+            transition: all 0.2s ease;
+        }
+
+        .star-selector i.active,
+        .star-selector i.hovered {
+            color: #fbbf24;
+            text-shadow: 0 0 12px rgba(251,191,36,0.6);
+        }
+
+        .review-inputs {
+            display: flex;
+            flex-direction: column;
+            gap: 0.9rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .review-input {
+            background: rgba(26,31,58,0.6);
+            border: 2px solid rgba(0,212,255,0.2);
+            border-radius: 12px;
+            padding: 12px 18px;
+            color: var(--text-light);
+            font-size: 0.92rem;
+            font-family: 'Poppins', sans-serif;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            resize: none;
+        }
+
+        .review-input:focus {
+            outline: none;
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0,212,255,0.25);
+        }
+
+        .review-input::placeholder { color: var(--text-tertiary); }
+
+        .submit-review-btn {
+            width: 100%;
+            padding: 13px;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            color: var(--primary-dark);
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .submit-review-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(0,212,255,0.5);
+        }
+
+        .submit-review-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Tarjetas de reseñas */
+        .reviews-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .review-card {
+            background: linear-gradient(135deg, rgba(26,31,58,0.35), rgba(42,51,89,0.2));
+            border: 1px solid rgba(0,212,255,0.1);
+            border-radius: 16px;
+            padding: 1.4rem 1.6rem;
+            backdrop-filter: blur(8px);
+            animation: fadeInUp 0.5s ease both;
+            transition: border-color 0.3s ease;
+        }
+
+        .review-card:hover {
+            border-color: rgba(0,212,255,0.3);
+        }
+
+        .review-card-top {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.7rem;
+        }
+
+        .reviewer-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1rem;
+            flex-shrink: 0;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            color: var(--primary-dark);
+        }
+
+        .reviewer-info { flex: 1; }
+
+        .reviewer-name {
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        .review-date {
+            color: var(--text-tertiary);
+            font-size: 0.78rem;
+        }
+
+        .review-stars {
+            font-size: 0.95rem;
+            letter-spacing: 2px;
+        }
+
+        .review-text {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .no-reviews-msg {
+            text-align: center;
+            color: var(--text-tertiary);
+            padding: 2rem;
+            font-size: 0.95rem;
+        }
+
+        /* Toast de confirmación */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: linear-gradient(135deg, rgba(10,14,39,0.95), rgba(26,31,58,0.95));
+            border: 2px solid var(--neon-green);
+            border-radius: 14px;
+            padding: 1rem 1.5rem;
+            color: var(--neon-green);
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 0 30px rgba(0,255,136,0.3);
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Panel de Administrador */
+        .admin-toggle-btn {
+            display: block;
+            margin: 0 auto 1.5rem;
+            padding: 10px 28px;
+            background: rgba(255,0,110,0.1);
+            border: 2px solid rgba(255,0,110,0.35);
+            border-radius: 50px;
+            color: var(--neon-pink);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .admin-toggle-btn:hover {
+            background: rgba(255,0,110,0.2);
+            box-shadow: 0 0 20px rgba(255,0,110,0.3);
+        }
+
+        .admin-modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(5,8,18,0.94);
+            backdrop-filter: blur(14px);
+            z-index: 2500;
+            padding: 2rem 1rem;
+            overflow-y: auto;
+        }
+
+        .admin-modal-overlay.active {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+        .admin-modal-box {
+            background: linear-gradient(135deg, rgba(10,14,39,0.99), rgba(26,31,58,0.99));
+            border: 2px solid rgba(255,0,110,0.3);
+            border-radius: 24px;
+            max-width: 900px;
+            width: 100%;
+            padding: 2.5rem;
+            box-shadow: 0 0 60px rgba(255,0,110,0.15);
+        }
+
+        .admin-modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255,0,110,0.2);
+            padding-bottom: 1.2rem;
+        }
+
+        .admin-modal-header h2 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--neon-pink);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .admin-close {
+            background: rgba(255,0,110,0.1);
+            border: 2px solid rgba(255,0,110,0.3);
+            color: var(--neon-pink);
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .admin-close:hover { background: rgba(255,0,110,0.25); transform: rotate(90deg); }
+
+        .admin-stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .admin-stat-card {
+            background: rgba(26,31,58,0.5);
+            border: 1px solid rgba(0,212,255,0.15);
+            border-radius: 14px;
+            padding: 1.2rem;
+            text-align: center;
+        }
+
+        .admin-stat-num {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .admin-stat-label {
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 0.3rem;
+        }
+
+        .admin-filter-row {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 6px 16px;
+            border-radius: 50px;
+            border: 1px solid rgba(0,212,255,0.25);
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: rgba(0,212,255,0.12);
+            border-color: var(--neon-blue);
+            color: var(--neon-blue);
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.88rem;
+        }
+
+        .admin-table th {
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            padding: 0.8rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(0,212,255,0.12);
+        }
+
+        .admin-table td {
+            padding: 0.9rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            vertical-align: top;
+        }
+
+        .admin-table tr:hover td {
+            background: rgba(0,212,255,0.04);
+        }
+
+        .admin-table .td-comment {
+            color: var(--text-secondary);
+            max-width: 300px;
+            font-size: 0.83rem;
+            line-height: 1.5;
+        }
+
+        .star-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 10px;
+            border-radius: 50px;
+            font-size: 0.82rem;
+            font-weight: 700;
+        }
+
+        .star-badge.s5 { background: rgba(0,255,136,0.12); color: var(--neon-green); border: 1px solid rgba(0,255,136,0.3); }
+        .star-badge.s4 { background: rgba(0,212,255,0.12); color: var(--neon-blue); border: 1px solid rgba(0,212,255,0.3); }
+        .star-badge.s3 { background: rgba(168,85,247,0.12); color: var(--neon-purple-light); border: 1px solid rgba(168,85,247,0.3); }
+        .star-badge.s2 { background: rgba(251,191,36,0.12); color: #fbbf24; border: 1px solid rgba(251,191,36,0.3); }
+        .star-badge.s1 { background: rgba(255,0,110,0.12); color: var(--neon-pink); border: 1px solid rgba(255,0,110,0.3); }
+
+        .admin-empty {
+            text-align: center;
+            color: var(--text-tertiary);
+            padding: 3rem;
+            font-size: 0.95rem;
+        }
+
+        .delete-btn {
+            background: rgba(255,0,110,0.1);
+            border: 1px solid rgba(255,0,110,0.25);
+            color: var(--neon-pink);
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .delete-btn:hover { background: rgba(255,0,110,0.25); }
+
+        /* ===== SECCIÓN RESEÑAS ===== */
+        .reviews-section {
+            max-width: 1000px;
+            margin: 6rem auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .review-form-box {
+            background: linear-gradient(135deg, rgba(26,31,58,0.5), rgba(42,51,89,0.4));
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(0,212,255,0.2);
+            border-radius: 24px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 0 40px rgba(0,212,255,0.08);
+        }
+
+        .review-form-box h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--neon-blue);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .star-selector {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 1.5rem;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+        }
+
+        .star-selector input { display: none; }
+
+        .star-selector label {
+            font-size: 2.2rem;
+            color: var(--text-tertiary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            filter: drop-shadow(0 0 0px transparent);
+        }
+
+        .star-selector label:hover,
+        .star-selector label:hover ~ label,
+        .star-selector input:checked ~ label {
+            color: #fbbf24;
+            filter: drop-shadow(0 0 6px rgba(251,191,36,0.7));
+        }
+
+        .review-textarea {
+            width: 100%;
+            min-height: 110px;
+            background: rgba(10,14,39,0.6);
+            border: 1.5px solid rgba(0,212,255,0.2);
+            border-radius: 14px;
+            color: var(--text-light);
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            padding: 1rem 1.2rem;
+            resize: vertical;
+            transition: border-color 0.3s ease;
+            margin-bottom: 1rem;
+        }
+
+        .review-textarea:focus {
+            outline: none;
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 15px rgba(0,212,255,0.15);
+        }
+
+        .review-name-input {
+            width: 100%;
+            background: rgba(10,14,39,0.6);
+            border: 1.5px solid rgba(0,212,255,0.2);
+            border-radius: 14px;
+            color: var(--text-light);
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            padding: 0.75rem 1.2rem;
+            margin-bottom: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .review-name-input:focus {
+            outline: none;
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 15px rgba(0,212,255,0.15);
+        }
+
+        .review-name-input::placeholder,
+        .review-textarea::placeholder { color: var(--text-tertiary); }
+
+        .btn-submit-review {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 35px;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            color: var(--primary-dark);
+            border: none;
+            border-radius: 50px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-submit-review:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(0,212,255,0.5);
+        }
+
+        .review-success {
+            display: none;
+            color: var(--neon-green);
+            font-size: 0.9rem;
+            margin-top: 0.8rem;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Review cards públicas */
+        .reviews-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .review-card {
+            background: linear-gradient(135deg, rgba(26,31,58,0.4), rgba(42,51,89,0.3));
+            border: 1.5px solid rgba(0,212,255,0.12);
+            border-radius: 18px;
+            padding: 1.5rem 2rem;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .review-card:hover {
+            border-color: rgba(0,212,255,0.3);
+            box-shadow: 0 0 20px rgba(0,212,255,0.08);
+        }
+
+        .review-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.7rem;
+        }
+
+        .reviewer-name {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--neon-blue);
+        }
+
+        .review-stars-display {
+            color: #fbbf24;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            filter: drop-shadow(0 0 4px rgba(251,191,36,0.5));
+        }
+
+        .review-text {
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+
+        .review-date-small {
+            color: var(--text-tertiary);
+            font-size: 0.78rem;
+            margin-top: 0.5rem;
+        }
+
+        .no-reviews-msg {
+            text-align: center;
+            color: var(--text-tertiary);
+            padding: 2rem;
+            font-size: 0.95rem;
+        }
+
+        /* Promedio general */
+        .rating-summary {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            background: rgba(0,212,255,0.05);
+            border: 1.5px solid rgba(0,212,255,0.15);
+            border-radius: 18px;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .rating-big {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fbbf24, var(--neon-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+        }
+
+        .rating-summary-right { flex: 1; }
+        .rating-summary-right .stars-big {
+            color: #fbbf24;
+            font-size: 1.6rem;
+            letter-spacing: 3px;
+        }
+
+        .rating-count {
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+            margin-top: 4px;
+        }
+
+        /* Admin panel */
+        .admin-toggle-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 25px;
+            background: rgba(168,85,247,0.12);
+            border: 1.5px solid rgba(168,85,247,0.3);
+            color: var(--neon-purple-light);
+            border-radius: 50px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+
+        .admin-toggle-btn:hover {
+            background: rgba(168,85,247,0.2);
+            box-shadow: 0 0 20px rgba(168,85,247,0.3);
+        }
+
+        .admin-panel {
+            display: none;
+            background: linear-gradient(135deg, rgba(42,10,70,0.6), rgba(26,31,58,0.6));
+            border: 2px solid rgba(168,85,247,0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 0 40px rgba(168,85,247,0.1);
+        }
+
+        .admin-panel.open { display: block; }
+
+        .admin-panel h4 {
+            color: var(--neon-purple-light);
+            font-size: 1.1rem;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .admin-login-row {
+            display: flex;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .admin-pass-input {
+            flex: 1;
+            min-width: 180px;
+            background: rgba(10,14,39,0.7);
+            border: 1.5px solid rgba(168,85,247,0.3);
+            border-radius: 12px;
+            color: var(--text-light);
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            padding: 0.65rem 1rem;
+        }
+
+        .admin-pass-input:focus { outline: none; border-color: var(--neon-purple); }
+
+        .btn-admin-login {
+            padding: 0.65rem 1.5rem;
+            background: linear-gradient(135deg, var(--neon-purple), #7c3aed);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-admin-login:hover { opacity: 0.85; }
+
+        .admin-error { color: var(--neon-pink); font-size: 0.82rem; margin-top: 4px; }
+
+        .admin-reviews-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.88rem;
+        }
+
+        .admin-reviews-table th {
+            text-align: left;
+            color: var(--neon-purple-light);
+            padding: 0.6rem 0.8rem;
+            border-bottom: 1px solid rgba(168,85,247,0.2);
+            font-weight: 600;
+        }
+
+        .admin-reviews-table td {
+            padding: 0.75rem 0.8rem;
+            color: var(--text-secondary);
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            vertical-align: top;
+        }
+
+        .admin-stats {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .admin-stat-pill {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(168,85,247,0.1);
+            border: 1px solid rgba(168,85,247,0.2);
+            border-radius: 50px;
+            padding: 6px 16px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .admin-stat-pill strong { color: var(--neon-purple-light); }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .article-card.featured {
+                grid-template-columns: 1fr;
+            }
+            .modal-box {
+                padding: 2rem 1.2rem;
+            }
+            .modal-header h2 {
+                font-size: 1.5rem;
+            }
+        }
+            nav {
+                display: none;
+                position: absolute;
+                top: 70px;
+                right: 0;
+                flex-direction: column;
+                gap: 0;
+                background: linear-gradient(135deg, rgba(10, 14, 39, 0.95), rgba(26, 31, 58, 0.95));
+                backdrop-filter: blur(20px);
+                border: 2px solid rgba(0, 212, 255, 0.2);
+                border-top: none;
+                width: 100%;
+                padding: 1.5rem;
+            }
+
+            nav.active {
+                display: flex;
+            }
+
+            nav a {
+                padding: 1rem 0;
+                border-bottom: 1px solid rgba(0, 212, 255, 0.1);
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .hero {
+                min-height: 600px;
+                padding: 4rem 2rem;
+            }
+
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .cta-button {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .newsletter {
+                padding: 3rem 1.5rem;
+            }
+
+            .newsletter h2 {
+                font-size: 1.8rem;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .newsletter-form input,
+            .newsletter-form button {
+                width: 100%;
+            }
+
+            .hero-circle-1, .hero-circle-2 {
+                opacity: 0.5;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo">
+                <svg width="45" height="45" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#00d4ff;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#a855f7;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <circle cx="50" cy="50" r="45" fill="url(#logoGrad)" opacity="0.2"/>
+                    <path d="M 35 40 L 50 25 L 65 40 L 65 70 L 35 70 Z" fill="url(#logoGrad)" stroke="url(#logoGrad)" stroke-width="2"/>
+                    <circle cx="50" cy="55" r="8" fill="none" stroke="url(#logoGrad)" stroke-width="2"/>
+                </svg>
+                <span class="logo-text">UTTT EROS</span>
+            </a>
+            <nav id="nav">
+                <a href="#inicio">Inicio</a>
+                <a href="#articulos">Artículos</a>
+                <a href="#categorias">Categorías</a>
+                <a href="#contacto">Contacto</a>
+            </nav>
+            <button class="menu-toggle" id="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero" id="inicio">
+        <div class="hero-bg">
+            <div class="hero-circle-1"></div>
+            <div class="hero-circle-2"></div>
+        </div>
+        
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-rocket"></i> INNOVACIÓN TECNOLÓGICA
+            </div>
+            <h1>TECNOLOGÍA SIN LÍMITES</h1>
+            <p class="hero-subtitle">
+                Sumérgete en el futuro de la programación, inteligencia artificial y gaming. 
+                Tutoriales, noticias y análisis de las tendencias más disruptivas del 2026.
+            </p>
+            <div class="hero-buttons">
+                <button class="cta-button" onclick="scrollToArticles()">
+                    <i class="fas fa-fire"></i> EXPLORAR AHORA
+                </button>
+                <a href="#contacto" class="cta-button cta-button-secondary">
+                    <i class="fas fa-envelope"></i> SUSCRIBIRSE
+                </a>
+            </div>
+        </div>
+
+        <div class="scroll-indicator">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- CATEGORÍAS -->
+    <section class="categories" id="categorias">
+        <div class="categories-grid">
+            <div class="category-card">
+                <i class="fas fa-code category-icon"></i>
+                <h3>Programación</h3>
+                <p>Domina lenguajes, frameworks y desarrollo web moderno</p>
+            </div>
+            <div class="category-card">
+                <i class="fas fa-gamepad category-icon"></i>
+                <h3>Gaming</h3>
+                <p>Noticias, reseñas y análisis de los mejores videojuegos</p>
+            </div>
+            <div class="category-card">
+                <i class="fas fa-microchip category-icon"></i>
+                <h3>Tecnología</h3>
+                <p>Hardware, gadgets y tendencias tech más disruptivas</p>
+            </div>
+            <div class="category-card">
+                <i class="fas fa-brain category-icon"></i>
+                <h3>IA & ML</h3>
+                <p>Inteligencia artificial y machine learning del futuro</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- BANNER PRINCIPAL -->
+    <section class="banner-section">
+        <div class="banner-image">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 400'%3E%3Cdefs%3E%3ClinearGradient id='grad1' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23050812;stop-opacity:1' /%3E%3Cstop offset='50%25' style='stop-color:%230a0e27;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%231a0033;stop-opacity:1' /%3E%3C/linearGradient%3E%3ClinearGradient id='neon' x1='0%25' y1='0%25' x2='100%25' y2='0%25'%3E%3Cstop offset='0%25' style='stop-color:%2300d4ff;stop-opacity:0.3' /%3E%3Cstop offset='50%25' style='stop-color:%23a855f7;stop-opacity:0.3' /%3E%3Cstop offset='100%25' style='stop-color:%23ff006e;stop-opacity:0.3' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill='url(%23grad1)' width='1200' height='400'/%3E%3Crect fill='url(%23neon)' y='180' width='1200' height='40'/%3E%3Ctext x='600' y='120' font-size='64' font-weight='bold' fill='%2300d4ff' text-anchor='middle' font-family='Poppins'%3EBLOG%3C/text%3E%3Ctext x='600' y='200' font-size='64' font-weight='bold' fill='%23a855f7' text-anchor='middle' font-family='Poppins'%3ETECNOLÓGICO%3C/text%3E%3Ctext x='600' y='280' font-size='20' fill='%23b0b0b0' text-anchor='middle' font-family='Poppins'%3ENoticas, Tutoriales y Actualizaciones para Mantenerte Siempre Actualizado%3C/text%3E%3Ccircle cx='150' cy='80' r='60' fill='none' stroke='%2300d4ff' stroke-width='2' opacity='0.5'/%3E%3Ccircle cx='1050' cy='320' r='80' fill='none' stroke='%23a855f7' stroke-width='2' opacity='0.5'/%3E%3C/svg%3E" alt="Banner UTTT EROS">
+        </div>
+    </section>
+
+    <!-- ARTÍCULOS RECIENTES -->
+    <section class="articles-section" id="articulos">
+        <h2 class="section-title">ARTÍCULOS DESTACADOS</h2>
+        <p class="section-description">Descubre los análisis más profundos sobre tecnología, programación e IA</p>
+        
+        <div class="articles-grid">
+            <!-- ARTÍCULO DESTACADO: Evaluar Diseños -->
+            <article class="article-card featured" onclick="openArticleModal()">
+                <div class="article-image">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 320'%3E%3Cdefs%3E%3ClinearGradient id='gux' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2300d4ff;stop-opacity:0.18' /%3E%3Cstop offset='100%25' style='stop-color:%23a855f7;stop-opacity:0.18' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill='url(%23gux)' width='400' height='320'/%3E%3Crect x='40' y='60' width='100' height='80' rx='10' fill='%2300d4ff' opacity='0.25' stroke='%2300d4ff' stroke-width='2'/%3E%3Ctext x='90' y='110' font-size='13' fill='%2300d4ff' text-anchor='middle' font-family='Poppins' font-weight='bold'%3EUSABILITY%3C/text%3E%3Crect x='150' y='40' width='100' height='80' rx='10' fill='%23a855f7' opacity='0.25' stroke='%23a855f7' stroke-width='2'/%3E%3Ctext x='200' y='86' font-size='13' fill='%23a855f7' text-anchor='middle' font-family='Poppins' font-weight='bold'%3EHEURISTIC%3C/text%3E%3Crect x='260' y='60' width='100' height='80' rx='10' fill='%2300ff88' opacity='0.2' stroke='%2300ff88' stroke-width='2'/%3E%3Ctext x='310' y='110' font-size='13' fill='%2300ff88' text-anchor='middle' font-family='Poppins' font-weight='bold'%3EMETRICS%3C/text%3E%3Cline x1='90' y1='140' x2='200' y2='120' stroke='%2300d4ff' stroke-width='1.5' opacity='0.5'/%3E%3Cline x1='200' y1='120' x2='310' y2='140' stroke='%23a855f7' stroke-width='1.5' opacity='0.5'/%3E%3Ccircle cx='200' cy='200' r='45' fill='none' stroke='%2300d4ff' stroke-width='2' opacity='0.4'/%3E%3Ccircle cx='200' cy='200' r='28' fill='none' stroke='%23a855f7' stroke-width='1.5' opacity='0.4'/%3E%3Ccircle cx='200' cy='200' r='10' fill='%2300ff88' opacity='0.5'/%3E%3Ctext x='200' y='275' font-size='22' font-weight='bold' fill='%2300d4ff' text-anchor='middle' font-family='Poppins'%3EEvaluar UX%3C/text%3E%3C/svg%3E" alt="Evaluar Diseños UX">
+                </div>
+                <div class="article-content">
+                    <div class="featured-badge"><i class="fas fa-star"></i> Artículo Destacado</div>
+                    <span class="article-category">Ingeniería de Software</span>
+                    <p class="article-date"><i class="fas fa-calendar"></i> Junio 24, 2026</p>
+                    <h3>Evaluar los Diseños Frente a los Requisitos</h3>
+                    <p>Descubre las tres metodologías clave para validar que tu software realmente cumple con las necesidades del usuario: pruebas de usabilidad, evaluación heurística y análisis de métricas. Incluye entregables, fórmulas y ejemplos prácticos.</p>
+                    <a href="#" class="read-more" onclick="event.stopPropagation(); openArticleModal()">Leer artículo <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </article>
+
+                <div class="article-image">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 220'%3E%3Cdefs%3E%3ClinearGradient id='g1' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2300d4ff;stop-opacity:0.2' /%3E%3Cstop offset='100%25' style='stop-color:%23a855f7;stop-opacity:0.2' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill='url(%23g1)' width='300' height='220'/%3E%3Ccircle cx='150' cy='110' r='60' fill='%2300d4ff' opacity='0.6'/%3E%3Cpath d='M 130 90 L 150 70 L 170 90 L 170 130 L 130 130 Z' fill='%23ffffff' opacity='0.3'/%3E%3Ctext x='150' y='180' font-size='24' font-weight='bold' fill='%2300d4ff' text-anchor='middle' font-family='Poppins'%3EIA%3C/text%3E%3C/svg%3E" alt="IA Artificial">
+                </div>
+                <div class="article-content">
+                    <span class="article-category">IA & ML</span>
+                    <p class="article-date"><i class="fas fa-calendar"></i> Mayo 20, 2026</p>
+                    <h3>¿Qué es la IA Artificial?</h3>
+                    <p>Descubre cómo la inteligencia artificial está revolucionando el mundo y sus aplicaciones en diferentes industrias.</p>
+                    <a href="#" class="read-more">Leer artículo <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </article>
+
+            <article class="article-card">
+                <div class="article-image">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 220'%3E%3Cdefs%3E%3ClinearGradient id='g2' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23a855f7;stop-opacity:0.2' /%3E%3Cstop offset='100%25' style='stop-color:%2300d4ff;stop-opacity:0.2' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill='url(%23g2)' width='300' height='220'/%3E%3Crect x='80' y='60' width='140' height='100' fill='none' stroke='%23a855f7' stroke-width='3' opacity='0.6'/%3E%3Ctext x='150' y='180' font-size='24' font-weight='bold' fill='%23a855f7' text-anchor='middle' font-family='Poppins'%3EVR%3C/text%3E%3C/svg%3E" alt="Realidad Virtual">
+                </div>
+                <div class="article-content">
+                    <span class="article-category">Tecnología</span>
+                    <p class="article-date"><i class="fas fa-calendar"></i> Mayo 18, 2026</p>
+                    <h3>Realidad Virtual 2026</h3>
+                    <p>Nuevas experiencias inmersivas y los avances más recientes en tecnología VR que cambiarán tu forma de jugar.</p>
+                    <a href="#" class="read-more">Leer artículo <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </article>
+
+            <article class="article-card">
+                <div class="article-image">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 220'%3E%3Cdefs%3E%3ClinearGradient id='g3' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2300ff88;stop-opacity:0.2' /%3E%3Cstop offset='100%25' style='stop-color:%2300d4ff;stop-opacity:0.2' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill='url(%23g3)' width='300' height='220'/%3E%3Crect x='60' y='50' width='30' height='120' fill='%2300ff88' opacity='0.6'/%3E%3Crect x='105' y='40' width='30' height='130' fill='%2300ff88' opacity='0.6'/%3E%3Crect x='150' y='60' width='30' height='110' fill='%2300ff88' opacity='0.6'/%3E%3Crect x='195' y='50' width='30' height='120' fill='%2300ff88' opacity='0.6'/%3E%3Ctext x='150' y='190' font-size='24' font-weight='bold' fill='%2300ff88' text-anchor='middle' font-family='Poppins'%3EGPU%3C/text%3E%3C/svg%3E" alt="GPUs">
+                </div>
+                <div class="article-content">
+                    <span class="article-category">Hardware</span>
+                    <p class="article-date"><i class="fas fa-calendar"></i> Mayo 16, 2026</p>
+                    <h3>GPUs de Próxima Generación</h3>
+                    <p>Análisis detallado de las últimas tarjetas gráficas y su rendimiento en gaming y aplicaciones profesionales.</p>
+                    <a href="#" class="read-more">Leer artículo <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </article>
+
+            <article class="article-card">
+                <div class="article-image">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 220'%3E%3Cdefs%3E%3ClinearGradient id='g4' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23ff006e;stop-opacity:0.2' /%3E%3Cstop offset='100%25' style='stop-color:%2300d4ff;stop-opacity:0.2' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill='url(%23g4)' width='300' height='220'/%3E%3Cpath d='M 150 60 L 180 110 L 150 140 L 120 110 Z' fill='%23ff006e' opacity='0.6'/%3E%3Ccircle cx='150' cy='80' r='20' fill='none' stroke='%23ff006e' stroke-width='2' opacity='0.6'/%3E%3Ctext x='150' y='190' font-size='24' font-weight='bold' fill='%23ff006e' text-anchor='middle' font-family='Poppins'%3EREACT%3C/text%3E%3C/svg%3E" alt="React.js">
+                </div>
+                <div class="article-content">
+                    <span class="article-category">Programación</span>
+                    <p class="article-date"><i class="fas fa-calendar"></i> Mayo 14, 2026</p>
+                    <h3>React.js Avanzado</h3>
+                    <p>Aprende técnicas avanzadas de React y mejora tus habilidades como desarrollador web moderno.</p>
+                    <a href="#" class="read-more">Leer artículo <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </article>
+
+            <article class="article-card">
+                <div class="article-image">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 220'%3E%3Cdefs%3E%3ClinearGradient id='g5' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%230096ff;stop-opacity:0.2' /%3E%3Cstop offset='100%25' style='stop-color:%23a855f7;stop-opacity:0.2' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill='url(%23g5)' width='300' height='220'/%3E%3Ccircle cx='150' cy='110' r='50' fill='none' stroke='%230096ff' stroke-width='3' opacity='0.6'/%3E%3Cpath d='M 150 80 L 160 110 L 150 130 L 140 110 Z' fill='%230096ff' opacity='0.6'/%3E%3Ctext x='150' y='190' font-size='24' font-weight='bold' fill='%230096ff' text-anchor='middle' font-family='Poppins'%3ESEGURIDAD%3C/text%3E%3C/svg%3E" alt="Ciberseguridad">
+                </div>
+                <div class="article-content">
+                    <span class="article-category">Seguridad</span>
+                    <p class="article-date"><i class="fas fa-calendar"></i> Mayo 12, 2026</p>
+                    <h3>Ciberseguridad 2026</h3>
+                    <p>Estrategias esenciales para proteger tus datos en un mundo digital cada vez más complejo.</p>
+                    <a href="#" class="read-more">Leer artículo <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </article>
+
+            <article class="article-card">
+                <div class="article-image">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 220'%3E%3Cdefs%3E%3ClinearGradient id='g6' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2300ff88;stop-opacity:0.2' /%3E%3Cstop offset='100%25' style='stop-color:%23a855f7;stop-opacity:0.2' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill='url(%23g6)' width='300' height='220'/%3E%3Ccircle cx='100' cy='80' r='25' fill='%2300ff88' opacity='0.4'/%3E%3Ccircle cx='200' cy='80' r='25' fill='%2300ff88' opacity='0.4'/%3E%3Crect x='75' y='130' width='150' height='40' fill='%2300ff88' opacity='0.4' rx='5'/%3E%3Ctext x='150' y='190' font-size='24' font-weight='bold' fill='%2300ff88' text-anchor='middle' font-family='Poppins'%3EPYTHON%3C/text%3E%3C/svg%3E" alt="Python Automatización">
+                </div>
+                <div class="article-content">
+                    <span class="article-category">Programación</span>
+                    <p class="article-date"><i class="fas fa-calendar"></i> Mayo 10, 2026</p>
+                    <h3>Automatización con Python</h3>
+                    <p>Descubre cómo automatizar tareas cotidianas usando Python y aumentar tu productividad exponencialmente.</p>
+                    <a href="#" class="read-more">Leer artículo <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- NEWSLETTER -->
+    <section class="newsletter" id="contacto">
+        <div class="newsletter-content">
+            <h2>ÚNETE A NUESTRA COMUNIDAD</h2>
+            <p>Recibe tutoriales exclusivos, noticias y análisis cada semana directamente en tu correo</p>
+            <form class="newsletter-form" onsubmit="return handleNewsletter(event)">
+                <input type="email" placeholder="tu.correo@ejemplo.com" required>
+                <button type="submit">
+                    <i class="fas fa-paper-plane"></i> SUSCRIBIRSE
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- SECCIÓN DE RESEÑAS -->
+    <section class="reviews-section" id="resenas">
+        <h2 class="section-title"><i class="fas fa-star" style="font-size:2.5rem;"></i> Reseñas</h2>
+        <p class="section-description">¿Qué te pareció nuestro blog? Déjanos tu opinión y calificación.</p>
+
+        <!-- Formulario público -->
+        <div class="review-form-box">
+            <h3><i class="fas fa-pen-nib"></i> Escribe tu reseña</h3>
+            <input class="review-name-input" id="reviewName" type="text" placeholder="Tu nombre (opcional)">
+            <div class="star-selector" id="starSelector">
+                <input type="radio" name="rating" id="s5" value="5"><label for="s5" title="5 estrellas">★</label>
+                <input type="radio" name="rating" id="s4" value="4"><label for="s4" title="4 estrellas">★</label>
+                <input type="radio" name="rating" id="s3" value="3"><label for="s3" title="3 estrellas">★</label>
+                <input type="radio" name="rating" id="s2" value="2"><label for="s2" title="2 estrellas">★</label>
+                <input type="radio" name="rating" id="s1" value="1"><label for="s1" title="1 estrella">★</label>
+            </div>
+            <textarea class="review-textarea" id="reviewText" placeholder="Cuéntanos tu experiencia con el blog…"></textarea>
+            <button class="btn-submit-review" onclick="submitReview()">
+                <i class="fas fa-paper-plane"></i> Enviar reseña
+            </button>
+            <div class="review-success" id="reviewSuccess">
+                <i class="fas fa-check-circle"></i> ¡Gracias por tu reseña!
+            </div>
+        </div>
+
+        <!-- Resumen de calificación -->
+        <div class="rating-summary" id="ratingSummary" style="display:none;">
+            <div class="rating-big" id="ratingAvg">-</div>
+            <div class="rating-summary-right">
+                <div class="stars-big" id="ratingStarsBig">☆☆☆☆☆</div>
+                <div class="rating-count" id="ratingCount">Sin reseñas aún</div>
+            </div>
+        </div>
+
+        <!-- Reseñas públicas -->
+        <div class="reviews-list" id="reviewsList">
+            <p class="no-reviews-msg" id="noReviewsMsg"><i class="fas fa-comment-slash"></i> Aún no hay reseñas. ¡Sé el primero!</p>
+        </div>
+
+        <!-- Botón panel admin -->
+        <div style="text-align:center; margin-top: 3rem;">
+            <button class="admin-toggle-btn" onclick="toggleAdminPanel()">
+                <i class="fas fa-shield-alt"></i> Panel de administración
+            </button>
+        </div>
+
+        <!-- Panel Admin -->
+        <div class="admin-panel" id="adminPanel">
+            <h4><i class="fas fa-lock"></i> Acceso administrador</h4>
+            <div id="adminLoginArea">
+                <div class="admin-login-row">
+                    <input class="admin-pass-input" id="adminPassInput" type="password" placeholder="Contraseña de admin" onkeydown="if(event.key==='Enter') adminLogin()">
+                    <button class="btn-admin-login" onclick="adminLogin()"><i class="fas fa-sign-in-alt"></i> Entrar</button>
+                </div>
+                <div class="admin-error" id="adminError" style="display:none;">Contraseña incorrecta.</div>
+            </div>
+            <div id="adminContent" style="display:none;">
+                <div class="admin-stats" id="adminStats"></div>
+                <div id="adminTableWrap"></div>
+                <div style="text-align:right; margin-top:1rem;">
+                    <button class="admin-toggle-btn" style="font-size:0.78rem;padding:7px 16px;" onclick="clearAllReviews()">
+                        <i class="fas fa-trash-alt"></i> Borrar todas las reseñas
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3><i class="fas fa-rocket"></i> UTTT EROS</h3>
+                <p>Blog tecnológico de élite dedicado a compartir conocimiento sobre programación, IA, gaming y las últimas tendencias en tecnología.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Navegación</h3>
+                <ul>
+                    <li><a href="#inicio"><i class="fas fa-chevron-right"></i> Inicio</a></li>
+                    <li><a href="#categorias"><i class="fas fa-chevron-right"></i> Categorías</a></li>
+                    <li><a href="#articulos"><i class="fas fa-chevron-right"></i> Artículos</a></li>
+                    <li><a href="#contacto"><i class="fas fa-chevron-right"></i> Contacto</a></li>
+                    <li><a href="#resenas"><i class="fas fa-chevron-right"></i> Reseñas</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Síguenos</h3>
+                <div class="social-links">
+                    <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 UTTT EROS - Blog Tecnológico. Todos los derechos reservados. Universidad Tecnológica de Torreón | Diseñado con <span style="color: var(--neon-blue);">♡</span></p>
+        </div>
+    </footer>
+
+    <!-- MODAL: ARTÍCULO COMPLETO -->
+    <div class="modal-overlay" id="articleModal" onclick="closeModalOnOverlay(event)">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeArticleModal()"><i class="fas fa-times"></i></button>
+            <div class="modal-header">
+                <div class="featured-badge"><i class="fas fa-star"></i> Artículo Destacado</div>
+                <h2>Evaluar los Diseños Frente a los Requisitos</h2>
+                <p class="article-date"><i class="fas fa-calendar"></i> Junio 24, 2026 &nbsp;|&nbsp; <i class="fas fa-user"></i> UTTT EROS &nbsp;|&nbsp; <span class="article-category" style="display:inline;padding:3px 10px;">Ingeniería de Software</span></p>
+            </div>
+            <div class="modal-body">
+                <p><strong style="color:var(--text-light)">Objetivo:</strong> Validar si el software es fácil de usar y si realmente resuelve los problemas del usuario. Es la fase crítica para el control de calidad, evaluando el sistema al final (o durante) su desarrollo para confirmar que cumple con las necesidades y el uso previsto por el usuario final.</p>
+
+                <h3><i class="fas fa-flask"></i> 1. Pruebas de Usabilidad con Usuarios Reales</h3>
+                <p>Consiste en observar a personas del público objetivo interactuando con el software para descubrir problemas de diseño en tiempo real.</p>
+                <p><strong style="color:var(--neon-blue)">Ejemplo práctico:</strong> Se reclutan 5 adultos mayores (65–75 años) para una app de telemedicina. Se les pide: <em>"Agenda una cita con el cardiólogo para mañana a las 4:00 PM."</em> El resultado revela que el icono de corazón en "Cardiología" se confunde con "Favoritos".</p>
+
+                <div class="metric-box">
+                    <h4><i class="fas fa-clipboard-list"></i> Guion de Tareas para Pruebas de Usuario</h4>
+                    <ul class="checklist">
+                        <li>Tarea 1: Registra una cuenta nueva con tu correo electrónico.</li>
+                        <li>Tarea 2: Encuentra la sección de configuración y cambia tu contraseña.</li>
+                        <li>Tarea 3: Crea un nuevo proyecto y asígnale un presupuesto.</li>
+                        <li>Tarea 4: Invita a un colaborador usando su dirección de correo.</li>
+                        <li>Tarea 5: Exporta el reporte del proyecto en formato PDF.</li>
+                    </ul>
+                    <p style="margin:0;font-size:0.88rem;">Cierre: ¿Cuál fue la tarea más difícil y por qué? ¿Qué cambiarías de la interfaz de forma inmediata?</p>
+                </div>
+
+                <h3><i class="fas fa-search"></i> 2. Evaluación Heurística por Expertos</h3>
+                <p>Un especialista UX analiza la interfaz usando las 10 heurísticas de Jakob Nielsen, sin necesidad de interactuar con usuarios finales. Detecta violaciones de buenas prácticas de diseño antes del lanzamiento.</p>
+
+                <div class="metric-box">
+                    <h4><i class="fas fa-check-double"></i> Lista de Verificación Heurística</h4>
+                    <ul class="checklist">
+                        <li>El sistema muestra indicador de carga durante procesos largos.</li>
+                        <li>El usuario puede deshacer (Ctrl+Z) la última acción realizada.</li>
+                        <li>Los botones con la misma función usan el mismo color.</li>
+                        <li>El sistema valida los campos del formulario antes de enviar.</li>
+                        <li>Los mensajes de error explican cómo solucionar el problema.</li>
+                        <li>Existen atajos de teclado para las funciones más repetitivas.</li>
+                        <li>La interfaz se adapta correctamente a dispositivos móviles.</li>
+                    </ul>
+                </div>
+
+                <h3><i class="fas fa-chart-bar"></i> 3. Análisis de Tasas de Error y Tiempos de Tarea</h3>
+                <p>Recolección de datos cuantitativos para medir eficiencia y eficacia de forma objetiva. Ejemplo: en una app de telemedicina, el 45% de usuarios busca recetas en "Configuración" en lugar de "Mis Documentos", con un tiempo promedio de 4 minutos (meta: &lt;1 min).</p>
+
+                <h3><i class="fas fa-tachometer-alt"></i> Métricas de Éxito del Software</h3>
+
+                <div class="metric-box">
+                    <h4>Adopción y Uso</h4>
+                    <ul>
+                        <li><strong>Tasa de conversión de registro:</strong> % de visitantes que crean cuenta.</li>
+                        <li><strong>Usuarios activos diarios (DAU):</strong> Usuarios únicos por día.</li>
+                        <li><strong>Tiempo de retención:</strong> Días de uso continuo del software.</li>
+                    </ul>
+                    <span class="metric-formula">Tasa de Conversión = (Registros Completados / Visitantes Totales) × 100</span>
+                    <p style="font-size:0.85rem;margin:0;">Ejemplo: 150 registros / 1,500 visitantes × 100 = <strong style="color:var(--neon-green)">10%</strong></p>
+                </div>
+
+                <div class="metric-box">
+                    <h4>Experiencia UX</h4>
+                    <ul>
+                        <li><strong>Tasa de éxito de tareas:</strong> % de tareas completadas sin errores.</li>
+                        <li><strong>Tiempo por tarea:</strong> Segundos en completar un flujo específico.</li>
+                        <li><strong>CES (Puntuación de Esfuerzo del Cliente):</strong> Facilidad percibida por el usuario (escala 1–7).</li>
+                    </ul>
+                    <span class="metric-formula">Tasa de Éxito = (Tareas completadas con éxito / Total de intentos) × 100</span>
+                    <span class="metric-formula">CES promedio = Suma de puntuaciones / Número de respuestas</span>
+                </div>
+
+                <div class="metric-box">
+                    <h4>Técnicas y Rendimiento</h4>
+                    <ul>
+                        <li><strong>Tiempo de carga inicial:</strong> Segundos en mostrar la pantalla principal.</li>
+                        <li><strong>Tasa de error de API:</strong> % de peticiones fallidas al servidor.</li>
+                        <li><strong>Tiempo de respuesta del servidor:</strong> Milisegundos en procesar solicitudes.</li>
+                    </ul>
+                    <span class="metric-formula">Tasa error API = (Solicitudes fallidas / Solicitudes totales) × 100</span>
+                    <span class="metric-formula">T_total = T_DNS + T_TCP + T_SSL + T_Procesamiento + T_Red</span>
+                </div>
+
+                <h3><i class="fas fa-lightbulb"></i> Resumen del Impacto en el Diseño</h3>
+                <ul>
+                    <li><strong>Evaluación heurística:</strong> Limpia los errores de diseño más obvios antes de lanzar el producto.</li>
+                    <li><strong>Pruebas con usuarios:</strong> Aportan empatía y contexto real de uso.</li>
+                    <li><strong>Tasas de error y tiempos:</strong> Proveen la prueba matemática de que el software funciona bien.</li>
+                </ul>
+
+                <div class="tag-row">
+                    <span class="tag">Usabilidad</span>
+                    <span class="tag">UX</span>
+                    <span class="tag">Heurísticas Nielsen</span>
+                    <span class="tag">Métricas</span>
+                    <span class="tag">Pruebas de usuario</span>
+                    <span class="tag">CES</span>
+                    <span class="tag">API Error Rate</span>
+                    <span class="tag">Calidad de software</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const nav = document.getElementById('nav');
+
+        menuToggle.addEventListener('click', () => {
+            nav.classList.toggle('active');
+        });
+
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('active');
+            });
+        });
+
+        function scrollToArticles() {
+            document.getElementById('articulos').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function handleNewsletter(event) {
+            event.preventDefault();
+            const email = event.target.querySelector('input[type="email"]').value;
+            alert('¡Gracias por suscribirte con: ' + email + '! 🚀');
+            event.target.reset();
+            return false;
+        }
+
+        function openArticleModal() {
+            const modal = document.getElementById('articleModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeArticleModal() {
+            const modal = document.getElementById('articleModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function closeModalOnOverlay(e) {
+            if (e.target === document.getElementById('articleModal')) {
+                closeArticleModal();
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeArticleModal();
+        });
+
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.style.boxShadow = '0 8px 40px rgba(0, 212, 255, 0.2)';
+            } else {
+                header.style.boxShadow = '0 8px 32px rgba(0, 212, 255, 0.15)';
+            }
+        });
+
+        const observerOptions = {
+            threshold: 0.5
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const element = entry.target;
+                    element.style.animation = 'fadeInUp 0.8s ease both';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.article-card, .category-card').forEach(el => {
+            observer.observe(el);
+        });
+        // ===== SISTEMA DE RESEÑAS =====
+        const ADMIN_PASSWORD = 'eros2026';
+        const STORAGE_KEY = 'utttErosReviews';
+
+        function getReviews() {
+            try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+            catch { return []; }
+        }
+
+        function saveReviews(reviews) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(reviews));
+        }
+
+        function starsHTML(n) {
+            return '★'.repeat(n) + '☆'.repeat(5 - n);
+        }
+
+        function renderPublicReviews() {
+            const reviews = getReviews();
+            const list = document.getElementById('reviewsList');
+            const noMsg = document.getElementById('noReviewsMsg');
+            const summary = document.getElementById('ratingSummary');
+
+            // Remove existing cards (keep the noMsg)
+            [...list.querySelectorAll('.review-card')].forEach(c => c.remove());
+
+            if (reviews.length === 0) {
+                noMsg.style.display = 'block';
+                summary.style.display = 'none';
+                return;
+            }
+
+            noMsg.style.display = 'none';
+            summary.style.display = 'flex';
+
+            const avg = (reviews.reduce((a, r) => a + r.rating, 0) / reviews.length).toFixed(1);
+            const rounded = Math.round(avg);
+            document.getElementById('ratingAvg').textContent = avg;
+            document.getElementById('ratingStarsBig').textContent = starsHTML(rounded);
+            document.getElementById('ratingCount').textContent = reviews.length + ' reseña' + (reviews.length !== 1 ? 's' : '');
+
+            [...reviews].reverse().forEach(r => {
+                const card = document.createElement('div');
+                card.className = 'review-card';
+                card.innerHTML = `
+                    <div class="review-card-header">
+                        <span class="reviewer-name"><i class="fas fa-user-circle"></i> ${r.name || 'Anónimo'}</span>
+                        <span class="review-stars-display">${starsHTML(r.rating)}</span>
+                    </div>
+                    <p class="review-text">${r.text ? r.text : '<em style="color:var(--text-tertiary)">Sin comentario.</em>'}</p>
+                    <p class="review-date-small"><i class="fas fa-clock"></i> ${r.date}</p>
+                `;
+                list.appendChild(card);
+            });
+        }
+
+        function submitReview() {
+            const ratingInput = document.querySelector('input[name="rating"]:checked');
+            const text = document.getElementById('reviewText').value.trim();
+            const name = document.getElementById('reviewName').value.trim();
+
+            if (!ratingInput) {
+                alert('Por favor selecciona una calificación con estrellas.');
+                return;
+            }
+
+            const reviews = getReviews();
+            reviews.push({
+                id: Date.now(),
+                name: name || 'Anónimo',
+                rating: parseInt(ratingInput.value),
+                text: text,
+                date: new Date().toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' })
+            });
+            saveReviews(reviews);
+
+            // Reset form
+            document.querySelectorAll('input[name="rating"]').forEach(i => i.checked = false);
+            document.getElementById('reviewText').value = '';
+            document.getElementById('reviewName').value = '';
+
+            const successEl = document.getElementById('reviewSuccess');
+            successEl.style.display = 'flex';
+            setTimeout(() => { successEl.style.display = 'none'; }, 3000);
+
+            renderPublicReviews();
+        }
+
+        let adminAuthenticated = false;
+
+        function toggleAdminPanel() {
+            const panel = document.getElementById('adminPanel');
+            panel.classList.toggle('open');
+            if (panel.classList.contains('open') && adminAuthenticated) {
+                renderAdminTable();
+            }
+        }
+
+        function adminLogin() {
+            const pass = document.getElementById('adminPassInput').value;
+            if (pass === ADMIN_PASSWORD) {
+                adminAuthenticated = true;
+                document.getElementById('adminLoginArea').style.display = 'none';
+                document.getElementById('adminError').style.display = 'none';
+                document.getElementById('adminContent').style.display = 'block';
+                renderAdminTable();
+            } else {
+                document.getElementById('adminError').style.display = 'block';
+            }
+        }
+
+        function renderAdminTable() {
+            const reviews = getReviews();
+            const statsEl = document.getElementById('adminStats');
+            const tableWrap = document.getElementById('adminTableWrap');
+
+            const avg = reviews.length ? (reviews.reduce((a, r) => a + r.rating, 0) / reviews.length).toFixed(2) : 'N/A';
+            const dist = [5,4,3,2,1].map(n => ({ n, count: reviews.filter(r => r.rating === n).length }));
+
+            statsEl.innerHTML = `
+                <div class="admin-stat-pill"><i class="fas fa-comments"></i> Total: <strong>${reviews.length}</strong></div>
+                <div class="admin-stat-pill"><i class="fas fa-star"></i> Promedio: <strong>${avg} ★</strong></div>
+                ${dist.map(d => `<div class="admin-stat-pill">${d.n}★ <strong>${d.count}</strong></div>`).join('')}
+            `;
+
+            if (reviews.length === 0) {
+                tableWrap.innerHTML = '<p class="admin-empty"><i class="fas fa-inbox"></i> No hay reseñas registradas.</p>';
+                return;
+            }
+
+            let rows = [...reviews].reverse().map(r => `
+                <tr>
+                    <td><strong style="color:var(--text-light)">${r.name}</strong></td>
+                    <td style="color:#fbbf24">${starsHTML(r.rating)} (${r.rating})</td>
+                    <td>${r.text || '<em>—</em>'}</td>
+                    <td style="white-space:nowrap">${r.date}</td>
+                    <td><button class="delete-btn" onclick="deleteReview(${r.id})" title="Eliminar"><i class="fas fa-trash"></i></button></td>
+                </tr>
+            `).join('');
+
+            tableWrap.innerHTML = `
+                <div style="overflow-x:auto;">
+                <table class="admin-reviews-table">
+                    <thead><tr>
+                        <th>Nombre</th><th>Calificación</th><th>Comentario</th><th>Fecha</th><th></th>
+                    </tr></thead>
+                    <tbody>${rows}</tbody>
+                </table>
+                </div>
+            `;
+        }
+
+        function deleteReview(id) {
+            if (!confirm('¿Eliminar esta reseña?')) return;
+            saveReviews(getReviews().filter(r => r.id !== id));
+            renderAdminTable();
+            renderPublicReviews();
+        }
+
+        function clearAllReviews() {
+            if (!confirm('¿Borrar TODAS las reseñas? Esta acción no se puede deshacer.')) return;
+            saveReviews([]);
+            renderAdminTable();
+            renderPublicReviews();
+        }
+
+        // Inicializar al cargar
+        document.addEventListener('DOMContentLoaded', renderPublicReviews);
+
+    </script>
+</body>
+</html>
